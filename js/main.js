@@ -6,8 +6,15 @@ const octeto2 = document.getElementById("octeto2");
 const octeto3 = document.getElementById("octeto3");
 const octeto4 = document.getElementById("octeto4");
 
+const idCompleta = document.getElementById("idCompleta");
+const claseRed = document.getElementById("claseRed");
+const mascaraRed = document.getElementById("mascaraRed");
+const tipoRed = document.getElementById("tipoRed");
 
-btnCalcular.addEventListener("click", accionCalcular());
+
+btnCalcular.addEventListener("click", () => {
+    accionCalcular();
+});
 
 function accionCalcular() {
     if(!validaOctetos()) return;
@@ -20,8 +27,8 @@ function accionCalcular() {
 
 function validaOctetos() {
     for(octeto of octetos) {
-        if( octeto.value < 0 || octeto.value > 255) {
-            alert("El valor de los octetos debe estar entre 0 y 255");
+        if( octeto.value < 0 || octeto.value > 255 || octeto.value == "") {
+            alert("El valor de los octetos debe estar entre 0 y 255.");
             return false;
         }
     }
@@ -30,11 +37,15 @@ function validaOctetos() {
 
 function muestraResultado() {
 
+    let ip = octeto1.value + "." + octeto2.value + "." + octeto3.value + "." + octeto4.value;
     let claseIP = calculaClaseIP();
     let mascara = calculaMascara(claseIP);
-    let tipoRed = calculaTipoRed(claseIP);
+    let tipo = calculaTipoRed(claseIP);
 
-    
+    idCompleta.innerHTML = ip;
+    claseRed.innerHTML = claseIP;
+    mascaraRed.innerHTML = mascara;
+    tipoRed.innerHTML = tipo;
 }
 
 function calculaClaseIP() {
