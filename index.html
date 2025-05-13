@@ -10,29 +10,31 @@
 </head>
 <body>
     <h1 class="tituloIndex">CalcuRedes</h1>
-    <table class="tablaIndex" id="tblIndex">
-        <tr>
-            <th colspan="50">Calcula la IP</th>
-        </tr>
+    <table id="tablaIp">
         <tr>
             <th>Introduzca IP</th>
             <td>
                 <input class="octeto" id="octeto1" value="127">
-                <td class="punto">.</td>
+                
             </td>
+            <td class="punto">.</td>
             <td>
                 <input class="octeto" id="octeto2" value="127">
-                <td class="punto">.</td>
+                
             </td>
+            <td class="punto">.</td>
             <td>
                 <input class="octeto" id="octeto3" value="127">
-                <td class="punto">.</td>
+                
             </td>
+            <td class="punto">.</td>
             <td>
                 <input class="octeto" id="octeto4" value="127">
             </td>
         </tr>
     </table>
+
+    <button class="botonCalcular" id="btnCalcular">CALCULAR</button>
 
     <table class="tablaInfo" id="tblInfo">
         <tr>
@@ -59,7 +61,6 @@
             </td>
         </tr>
     </table>
-    <button class="botonCalcular" id="btnCalcular">CALCULAR</button>
     <script defer src="js/main.js"></script>
 </body>
 </html>
