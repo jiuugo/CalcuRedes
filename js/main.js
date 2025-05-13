@@ -56,5 +56,26 @@ function calculaClaseIP() {
 }
 
 function calculaMascara(claseIP) {
-    
+    switch(claseIP) {
+        case "A":
+            return "255.0.0.0";
+        case "B":
+            return "255.255.0.0";
+        case "C":
+            return "255.255.255.0";
+        default:
+            return "No aplica";
+    }
+}
+function calculaTipoRed(claseIP) {
+    switch(claseIP) {
+        case "A":
+            return "Red pública";
+        case "B":
+            return "Red privada";
+        case "C":
+            return "Red pública";
+        default:
+            return "No aplica";
+    }
 }
