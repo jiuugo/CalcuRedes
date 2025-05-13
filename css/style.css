@@ -7,23 +7,27 @@
 }
 .botonCalcular{
     display: block;
-    margin: 0px auto;
-    align-items: center;
+    margin: 0 auto;
     text-align: center;
 }
 .octeto{
     margin-right: 5px;
     margin-left: 5px;
+    width: 40px;
 }
 .tituloInfo{
     text-align: center;
 }
 .tablaInfo{
-    align-items: center;
     text-align: center;
     margin: 0 auto;
+    width: 20%;
 }
 body{
-    background-color: peachpuff;
+    background-color: #fdf6ec;
+
+}
+.tablaIndex{
+    margin: 0 auto;
 
 }
