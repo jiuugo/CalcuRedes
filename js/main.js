@@ -11,6 +11,7 @@ const claseRed = document.getElementById("claseRed");
 const mascaraRed = document.getElementById("mascaraRed");
 const tipoRed = document.getElementById("tipoRed");
 
+const tblInfo = document.getElementById("tblInfo");
 
 btnCalcular.addEventListener("click", () => {
     accionCalcular();
@@ -18,6 +19,8 @@ btnCalcular.addEventListener("click", () => {
 
 function accionCalcular() {
     if(!validaOctetos()) return;
+
+    tblInfo.style.display = "table";
 
     muestraResultado();
 
