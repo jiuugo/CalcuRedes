@@ -1,0 +1,66 @@
+body{
+    background-color: #131218;
+    font-size: 22px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+.tituloIndex{
+    color: rgb(84, 207, 176); 
+    text-align: center;
+    font-family: "Anta", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 60px;
+}
+.octeto{
+    margin-right: 5px;
+    margin-left: 5px;
+    width: 40px;
+    height: 20px;
+    font-size: 15px;
+    text-align: center;
+    background-color: rgb(37, 37, 37);
+
+    border: 2px solid rgb(84, 207, 176,0.5);
+}
+#tablaIp{
+    margin: 40px auto;
+}
+.botonCalcular{
+    color: white;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 17px;
+    font-weight: 700;
+    background-color: rgb(84, 207, 176,0.3);
+}
+.botonCalcular:hover{
+    background-color: rgba(33, 245, 192, 0.5);
+    box-shadow: 0px 0px 5px 5px rgb(84, 207, 176,0.3);
+    cursor: grab;
+}
+ 
+#tituloInfo{
+    text-align: center;
+    margin: 100px;
+}
+.tablaInfo{
+    text-align: center;
+    margin: 80px auto;
+    width: 700px;
+    border: 3px solid rgb(84, 207, 176,0.3);
+    border-radius: 25px;
+    box-shadow: 0px 0px 50px 30px rgb(84, 207, 176,0.3);
+    display: none;
+    padding: 2em 0;
+}
+ 
+.tablaInfo td, .tablaInfo th{
+    padding: 1em;
+}
+.tablaInfo td{
+    width: 50%;
+}

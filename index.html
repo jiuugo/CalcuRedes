@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link  rel="stylesheet" href="css/style.css"><link rel="style">
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicon2.png">
+    <title>CalcuRedes</title>
+</head>
+<body>
+    <h1 class="tituloIndex">CalcuRedes</h1>
+    <table id="tablaIp">
+        <tr>
+            <th>Introduzca IP:</th>
+            <td>
+                <input class="octeto" id="octeto1">
+                
+            </td>
+            <td class="punto">.</td>
+            <td>
+                <input class="octeto" id="octeto2">
+                
+            </td>
+            <td class="punto">.</td>
+            <td>
+                <input class="octeto" id="octeto3">
+                
+            </td>
+            <td class="punto">.</td>
+            <td>
+                <input class="octeto" id="octeto4">
+            </td>
+        </tr>
+    </table>
+
+    <button class="botonCalcular" id="btnCalcular">CALCULAR !!</button>
+
+
+    <table class="tablaInfo" id="tblInfo">
+        <tr>
+            <th>IP</th>
+            <td id="idCompleta">
+            </td>
+        </tr>
+        <tr>
+            <th>Clase de Red</th>
+            <td id="claseRed">
+            </td>
+        </tr>
+        <tr>
+            <th>Máscara de Red</th>
+            <td id="mascaraRed">
+            </td>
+        </tr>
+        <tr>
+            <th>Tipo de Red</th>
+            <td id="tipoRed">
+            </td>
+        </tr>
+    </table>
+    <script defer src="js/main.js"></script>
+</body>
+</html>
