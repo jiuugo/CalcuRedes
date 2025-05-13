@@ -25,11 +25,14 @@ function accionCalcular() {
 }
 
 for (let octeto of octetos) {
-    octeto.addEventListener("keypress", (e) => {
-        if(validaOcteto(e.target)){
-            e.target.style.backgroundColor = "green";
-        }else{
-            e.target.style.backgroundColor = "red";
+    octeto.addEventListener("input", (e) => {
+        const value = e.target.value;
+        if (value >= 0 && value <= 255) {
+            e.target.style.boxShadow = "0 0 5px 3px green";
+            e.target.style.border = "green 3px solid";
+        } else {
+            e.target.style.boxShadow = "0 0 5px 3px red";
+            e.target.style.border = "red 3px solid";
         }
     });
 }
