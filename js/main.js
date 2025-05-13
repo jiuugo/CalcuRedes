@@ -24,10 +24,28 @@ function accionCalcular() {
 
 }
 
+for (let octeto of octetos) {
+    octeto.addEventListener("keypress", (e) => {
+        if(validaOcteto(e.target)){
+            e.target.style.backgroundColor = "green";
+        }else{
+            e.target.style.backgroundColor = "red";
+        }
+    });
+}
+
+
+function validaOcteto(octeto){
+    if(octeto.value < 0 || octeto.value > 255 || octeto.value == ""){
+        return false;
+    }
+    return true;
+}
+
 
 function validaOctetos() {
     for(octeto of octetos) {
-        if( octeto.value < 0 || octeto.value > 255 || octeto.value == "") {
+        if(!validaOcteto(octeto)) {
             alert("El valor de los octetos debe estar entre 0 y 255.");
             return false;
         }
