@@ -1,33 +1,49 @@
+body{
+    background-color: #fdf6ec;
+    font-size: 22px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 .tituloIndex{
-    color: brown;
+    color: #9b0202;
     text-align: center;
     font-family: "Anta", sans-serif;
     font-weight: 400;
     font-style: normal;
-}
-.botonCalcular{
-    display: block;
-    margin: 0 auto;
-    text-align: center;
+    font-size: 60px;
 }
 .octeto{
     margin-right: 5px;
     margin-left: 5px;
     width: 40px;
 }
+#tablaIp{
+    margin: 0 auto;
+}
+.botonCalcular{
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    
+}
+.botonCalcular:hover{
+    background-color: rgb(102, 102, 102);
+}
+
 .tituloInfo{
     text-align: center;
 }
 .tablaInfo{
     text-align: center;
-    margin: 0 auto;
-    width: 20%;
+    margin: 20px auto;
+    width: 600px;
+    border-collapse: collapse;
+    border-radius: 15px;
 }
-body{
-    background-color: #fdf6ec;
 
+.tablaInfo, .tablaInfo td, .tablaInfo th{
+    padding: 1em;
+    border: 2px solid rgb(110, 0, 0);
 }
-.tablaIndex{
-    margin: 0 auto;
-
+.tablaInfo td{
+    width: 50%;
 }
