@@ -1,3 +1,20 @@
 .tituloIndex{
     color: brown;
 }
+.botonCalcular{
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+}
+.octeto{
+    margin-right: 5px;
+    margin-left: 5px;
+}
+.tituloInfo{
+    text-align: center;
+}
+.tablaInfo{
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+}

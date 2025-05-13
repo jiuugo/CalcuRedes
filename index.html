@@ -9,10 +9,50 @@
 <body>
     <h1 class="tituloIndex">CalcuRedes</h1>
     <table class="tablaIndex" id="tblIndex">
+        <caption>Calcula la IP</caption>
         <tr>
-            <th>Introduza la IP</th>
+            <th>Introduzca IP</th>
             <td>
-                <input class="ip" id="idip">
+                <input class="octeto" id="octeto1">
+                <td class="punto">.</td>
+            </td>
+            <td>
+                <input class="octeto" id="octeto2">
+                <td class="punto">.</td>
+            </td>
+            <td>
+                <input class="octeto" id="octeto3">
+                <td class="punto">.</td>
+            </td>
+            <td>
+                <input class="octeto" id="octeto4">
+                <td class="punto">.</td>
+            </td>
+        </tr>
+    </table>
+
+    <table class="tablaInfo" id="tblInfo">
+        <tr>
+        <th class="tituloInfo" colspan="2">Información acerca de la IP introducida</th>
+    </tr>
+        <tr>
+            <th>IP</th>
+            <td id="idCompleta">
+            </td>
+        </tr>
+        <tr>
+            <th>Clase de Red</th>
+            <td id="claseRed">
+            </td>
+        </tr>
+        <tr>
+            <th>Máscara de Red</th>
+            <td id="mascaraRed">
+            </td>
+        </tr>
+        <tr>
+            <th>Tipo de Red</th>
+            <td id="tipoRed">
             </td>
         </tr>
     </table>
