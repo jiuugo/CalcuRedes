@@ -1,10 +1,6 @@
 const btnCalcular = document.getElementById("btnCalcular");
 
-const octetos = document.getElementsByClassName("octeto");
-const octeto1 = document.getElementById("octeto1");
-const octeto2 = document.getElementById("octeto2");
-const octeto3 = document.getElementById("octeto3");
-const octeto4 = document.getElementById("octeto4");
+const ip = document.getElementById("ip");
 
 const idCompleta = document.getElementById("idCompleta");
 const claseRed = document.getElementById("claseRed");
@@ -13,87 +9,98 @@ const tipoRed = document.getElementById("tipoRed");
 
 const tblInfo = document.getElementById("tblInfo");
 
+let octetos = [];
+let ipCompleta = "";
+
 btnCalcular.addEventListener("click", () => {
     accionCalcular();
 });
 
 function accionCalcular() {
-    if(!validaOctetos()) return;
+    ipCompleta = ip.value;
 
-    tblInfo.style.display = "table";
+    if (!validarIP()) return;
+
+    obtieneOctetos();
+
+    
+
 
     muestraResultado();
 
+    tblInfo.style.display = "table";
 
 }
 
-for (let octeto of octetos) {
-    octeto.addEventListener("input", (e) => {
-        const value = e.target.value;
-        if (value >= 0 && value <= 255) {
-            e.target.style.boxShadow = "0 0 5px 2px green";
-            e.target.style.border = "green 2px solid";
-            e.target.style.color = "green";
-        } else {
-            e.target.style.boxShadow = "0 0 5px 2px red";
-            e.target.style.border = "red 2px solid";
-            e.target.style.color = "red";
-        }
-    });
-}
+//aqui irá la función que valida el input y le da el color correspondiente
+ip.addEventListener("input", (e) => {
+
+});
 
 
-function validaOcteto(octeto){
-    if(octeto.value < 0 || octeto.value > 255 || octeto.value == ""){
-        return false;
-    }
-    return true;
-}
+function obtieneOctetos(){
+    octetos = [];
 
-
-function validaOctetos() {
-    for(octeto of octetos) {
-        if(!validaOcteto(octeto)) {
-            alert("El valor de los octetos debe estar entre 0 y 255.");
-            return false;
+    for(let i = 0; i < ip.value.length; i++){
+        if(ip.value[i] == "."){
+            octetos.push(ip.value.substring(0, i));
+            ip.value = ip.value.substring(i + 1);
+            i = 0;
         }
     }
-    return true;
+    ip.value=ipCompleta;
 }
+
+
+
+
+function validarIP() {
+
+  const regex = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
+ 
+  if (regex.test(ipCompleta)) {
+    return true;
+
+  } else {
+    alert("La dirección IP no es válida. Asegúrate de que cada octeto esté entre 0 y 255.");
+    return false;
+  }
+
+}
+ 
 
 function muestraResultado() {
 
-    let ip = octeto1.value + "." + octeto2.value + "." + octeto3.value + "." + octeto4.value;
     let claseIP = calculaClaseIP();
     let mascara = calculaMascara(claseIP);
     let tipo = calculaTipoRed(claseIP);
 
-    idCompleta.innerHTML = ip;
+    idCompleta.innerHTML = ipCompleta;
     claseRed.innerHTML = claseIP;
     mascaraRed.innerHTML = mascara;
     tipoRed.innerHTML = tipo;
 }
 
 function calculaClaseIP() {
-    if(octeto1.value < 128) {
+    if (octetos[0] < 128) {
         return "A";
     }
-    if(octeto1.value < 192) {
+    if (octetos[0] < 192) {
         return "B";
     }
-    if(octeto1.value < 224) {
+    if (octetos[0] < 224) {
         return "C";
     }
-    if(octeto1.value < 240) {
+    if (octetos[0] < 240) {
         return "D";
     }
-    if(octeto1.value < 256) {
+    if (octetos[0] < 256) {
         return "E";
     }
 }
 
 function calculaMascara(claseIP) {
-    switch(claseIP) {
+    switch (claseIP) {
         case "A":
             return "255.0.0.0";
         case "B":
@@ -105,7 +112,7 @@ function calculaMascara(claseIP) {
     }
 }
 function calculaTipoRed(claseIP) {
-    switch(claseIP) {
+    switch (claseIP) {
         case "A":
             return "Red pública";
         case "B":
