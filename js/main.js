@@ -29,6 +29,12 @@ btnCalcular.addEventListener("click", () => {
     accionCalcular();
 });
 
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    btnCalcular.click();
+  }
+});
+
 function accionCalcular() {
     ipCompleta = ip.value;
 
