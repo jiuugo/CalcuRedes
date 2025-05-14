@@ -11,27 +11,7 @@
 <body>
     <h1 class="tituloIndex">CalcuRedes</h1>
     <table id="tablaIp">
-        <tr>
-            <th>Introduzca IP:</th>
-            <td>
-                <input class="octeto" id="octeto1">
-                
-            </td>
-            <td class="punto">.</td>
-            <td>
-                <input class="octeto" id="octeto2">
-                
-            </td>
-            <td class="punto">.</td>
-            <td>
-                <input class="octeto" id="octeto3">
-                
-            </td>
-            <td class="punto">.</td>
-            <td>
-                <input class="octeto" id="octeto4">
-            </td>
-        </tr>
+    <input type="text" pattern="^(\d{1,3}\.){3}\d{1,3}$" class="octeto" id="ip" placeholder="Ingrese la IP">
     </table>
 
     <button class="botonCalcular" id="btnCalcular">CALCULAR !!</button>
@@ -39,8 +19,44 @@
 
     <table class="tablaInfo" id="tblInfo">
         <tr>
+            <th></th>
+            <th>Decimal</th>
+            <th>Binario</th>
+        </tr>
+        <tr>
             <th>IP</th>
-            <td id="idCompleta">
+            <td id="idCompleta"></td>
+            <td id="idBinario"></td>
+        </tr>
+        <tr>
+            <th>Máscara de subred</th>
+            <td id="mascaraRed">
+            <td id="binarioSubred"></td>
+            </td>
+        </tr>
+        <tr>
+            <th>Wildcard</th>
+            <td id="wildcard">
+            <td id="binarioWild"></td>
+            </td>
+        </tr>
+        <tr>
+            <th>Dirección de red</th>
+            <td id="dirRed">
+            <td id="binarioDirRed"></td>
+            </td>
+        </tr>
+        <tr>
+            <th>Dirección de broadcast</th>
+            <td id="dirBroadcast">
+            <td id="binarioDirBroadcast"></td>
+            </td>
+        </tr>
+    </table>
+    <table class="tablaInfo" id="tblInfo2">
+        <tr>
+            <th>Número de host</th>
+            <td id="numHost">
             </td>
         </tr>
         <tr>
@@ -48,11 +64,7 @@
             <td id="claseRed">
             </td>
         </tr>
-        <tr>
-            <th>Máscara de Red</th>
-            <td id="mascaraRed">
-            </td>
-        </tr>
+
         <tr>
             <th>Tipo de Red</th>
             <td id="tipoRed">
