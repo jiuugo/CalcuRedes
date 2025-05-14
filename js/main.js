@@ -81,11 +81,27 @@ function muestraResultado() {
     cidr = calculaCidr();
     let wildcardValor = calculaWildcard(cidr);
 
+    let mascaraEnBinario = direccionABinario(mascara);
+    let ipABinario = direccionABinario(ipCompleta);
+    let wildcardABinario = direccionABinario(wildcardValor);
+
+    alert(mascaraEnBinario);
+
     idCompleta.innerHTML = ipCompleta;
     claseRed.innerHTML = claseIP;
     mascaraRed.innerHTML = mascara;
     tipoRed.innerHTML = tipo;
     wildcard.innerHTML = wildcardValor;
+}
+
+function direccionABinario(direccion){
+    let octetosDireccion = obtieneOctetos(direccion);
+    let octetosBinario = [];
+
+    for(octeto of octetosDireccion){
+        octetosBinario.push(decimalABinario(parseInt(octeto,10)));
+    }
+    return convierteArrayADireccion(octetosBinario);
 }
 
 function calculaWildcard(){
@@ -160,7 +176,6 @@ function calculaCidr(){
     for(octeto of octetosMascara){
         mascaraBinaria += decimalABinario(parseInt(octeto,10));
     }
-    alert(mascaraBinaria);
 
     for(let i=0; i<mascaraBinaria.length;i++){
         if(mascaraBinaria[i]==1){
