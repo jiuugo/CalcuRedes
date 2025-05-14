@@ -123,13 +123,12 @@ function muestraResultado() {
 }
 
 function calculaBroadcast(direccionRedBinario, mascaraEnBinario) {
-    let dirBroadcast = direccionRedBinario;
+    let dirBroadcast = "";
 
     for (let i = 0; i < mascaraEnBinario.length; i++) {
-        if (mascaraEnBinario[i] != 1) {
-            dirBroadcast[i] = "1";
-            continue;
-        }
+        if (mascaraEnBinario[i] === "0") {
+            dirBroadcast += "1";
+        }else dirBroadcast += direccionRedBinario[i];
 
     }
 
