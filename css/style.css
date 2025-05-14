@@ -23,6 +23,7 @@ body{
     text-align: center;
     background-color: rgb(37, 37, 37);
     border: 2px solid rgb(84, 207, 176,0.5);
+    color: white;
 }
 #tablaIp{
     margin: 40px auto;
