@@ -6,11 +6,14 @@ const idCompleta = document.getElementById("idCompleta");
 const claseRed = document.getElementById("claseRed");
 const mascaraRed = document.getElementById("mascaraRed");
 const tipoRed = document.getElementById("tipoRed");
+const wildcard = document.getElementById("wildcard");
 
 const tblInfo = document.getElementById("tblInfo");
 
-let octetos = [];
+let octetosIp = [];
 let ipCompleta = "";
+let cidr = 24;
+let mascara = "";
 
 btnCalcular.addEventListener("click", () => {
     accionCalcular();
@@ -21,7 +24,7 @@ function accionCalcular() {
 
     if (!validarIP()) return;
 
-    obtieneOctetos();
+    octetosIp = obtieneOctetos(ipCompleta);
 
     
 
@@ -38,17 +41,18 @@ ip.addEventListener("input", (e) => {
 });
 
 
-function obtieneOctetos(){
-    octetos = [];
+function obtieneOctetos(direccion){
+    let octetos = [];
 
-    for(let i = 0; i < ip.value.length; i++){
-        if(ip.value[i] == "."){
-            octetos.push(ip.value.substring(0, i));
-            ip.value = ip.value.substring(i + 1);
+    for(let i = 0; i < direccion.length; i++){
+        if(direccion[i] == "."){
+            octetos.push(direccion.substring(0, i));
+            direccion = direccion.substring(i + 1);
             i = 0;
         }
     }
-    ip.value=ipCompleta;
+    octetos.push(direccion);
+    return octetos;
 }
 
 
@@ -72,29 +76,52 @@ function validarIP() {
 function muestraResultado() {
 
     let claseIP = calculaClaseIP();
-    let mascara = calculaMascara(claseIP);
+    mascara = calculaMascara(claseIP);
     let tipo = calculaTipoRed(claseIP);
+    cidr = calculaCidr();
+    let wildcardValor = calculaWildcard(cidr);
 
     idCompleta.innerHTML = ipCompleta;
     claseRed.innerHTML = claseIP;
     mascaraRed.innerHTML = mascara;
     tipoRed.innerHTML = tipo;
+    wildcard.innerHTML = wildcardValor;
+}
+
+function calculaWildcard(){
+    let octetosMascara = obtieneOctetos(mascara);
+    let wildcard = [];
+
+    for(octeto of octetosMascara){
+        wildcard.push(255-octeto);
+    }
+    return convierteArrayADireccion(wildcard);
+}
+
+function convierteArrayADireccion(array){
+    let direccion = "";
+    for(cadena of array){
+        direccion += cadena;
+        direccion += "."
+    }
+    direccion = direccion.substring(0,direccion.length-1);
+    return direccion;
 }
 
 function calculaClaseIP() {
-    if (octetos[0] < 128) {
+    if (octetosIp[0] < 128) {
         return "A";
     }
-    if (octetos[0] < 192) {
+    if (octetosIp[0] < 192) {
         return "B";
     }
-    if (octetos[0] < 224) {
+    if (octetosIp[0] < 224) {
         return "C";
     }
-    if (octetos[0] < 240) {
+    if (octetosIp[0] < 240) {
         return "D";
     }
-    if (octetos[0] < 256) {
+    if (octetosIp[0] < 256) {
         return "E";
     }
 }
@@ -122,4 +149,28 @@ function calculaTipoRed(claseIP) {
         default:
             return "No aplica";
     }
+}
+
+function calculaCidr(){
+    let octetosMascara = obtieneOctetos(mascara);
+
+    let mascaraBinaria = "";
+    let cidr = 0;
+
+    for(octeto of octetosMascara){
+        mascaraBinaria += decimalABinario(parseInt(octeto,10));
+    }
+    alert(mascaraBinaria);
+
+    for(let i=0; i<mascaraBinaria.length;i++){
+        if(mascaraBinaria[i]==1){
+            cidr++;
+        }
+    }
+
+    return cidr;
+}
+
+function decimalABinario(decimal) {
+    return decimal.toString(2);
 }
