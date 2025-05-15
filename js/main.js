@@ -23,7 +23,6 @@ const tblInfo2 = document.getElementById("tblInfo2");
 
 let octetosIp = [];
 let ipCompleta = "";
-let cidr = 24;
 let mascara = "";
 
 btnCalcular.addEventListener("click", () => {
@@ -94,22 +93,27 @@ function validarIP() {
 function muestraResultado() {
 
     let claseIP = calculaClaseIP();
-    mascara = calculaMascara(claseIP);
+
+    if(!validaCidr()){
+        idBits.value = calculaCidrDefecto(claseIP);
+    }
+
+
+    let mascaraBinario = calculaMascaraCidrBinario(idBits.value);
+    mascara = direccionADecimal(mascaraBinario);
+    
     let tipo = calculaTipoRed(claseIP);
-    cidr = calculaCidr();
     let wildcardValor = calculaWildcard();
 
 
-
-    let mascaraEnBinario = direccionABinario(mascara);
     let ipABinario = direccionABinario(ipCompleta);
     let wildcardABinario = direccionABinario(wildcardValor);
 
 
-    let direccionRedBinario = calculaDireccionRed(ipABinario, mascaraEnBinario);
+    let direccionRedBinario = calculaDireccionRed(ipABinario, mascaraBinario);
     let direccionDecimal = direccionADecimal(direccionRedBinario);
 
-    let broadcastBinario = calculaBroadcast(direccionRedBinario, mascaraEnBinario);
+    let broadcastBinario = calculaBroadcast(direccionRedBinario, mascaraBinario);
     let broadcastDecimal = direccionADecimal(broadcastBinario);
 
 
@@ -122,18 +126,41 @@ function muestraResultado() {
     dirBroadcast.innerHTML = broadcastDecimal;
 
     idBinario.innerHTML = ipABinario;
-    binarioSubred.innerHTML = mascaraEnBinario;
+    binarioSubred.innerHTML = mascaraBinario;
     binarioWild.innerHTML = wildcardABinario;
     binarioDirRed.innerHTML = direccionRedBinario;
     binarioDirBroadcast.innerHTML = broadcastBinario;
 
 }
 
-function calculaBroadcast(direccionRedBinario, mascaraEnBinario) {
+function validaCidr(){
+    let regex = /^(3[0-2]|[1-2]?[0-9])$/;
+
+    if( !regex.test(idBits.value)){
+        return false;
+    }
+
+    return true;
+}
+
+function calculaCidrDefecto(claseIP){
+        switch (claseIP) {
+        case "A":
+            return 8;
+        case "B":
+            return 16;
+        case "C":
+            return 24;
+        default:
+            return "No aplica";
+    }
+}
+
+function calculaBroadcast(direccionRedBinario, mascaraBinario) {
     let dirBroadcast = "";
 
-    for (let i = 0; i < mascaraEnBinario.length; i++) {
-        if (mascaraEnBinario[i] === "0") {
+    for (let i = 0; i < mascaraBinario.length; i++) {
+        if (mascaraBinario[i] === "0") {
             dirBroadcast += "1";
         }else dirBroadcast += direccionRedBinario[i];
 
@@ -143,7 +170,7 @@ function calculaBroadcast(direccionRedBinario, mascaraEnBinario) {
     return dirBroadcast;
 }
 
-function calculaDireccionRed(ipABinario, mascaraEnBinario) {
+function calculaDireccionRed(ipABinario, mascaraBinario) {
     let direccionRed = "";
 
     for (let i = 0; i < ipABinario.length; i++) {
@@ -152,7 +179,7 @@ function calculaDireccionRed(ipABinario, mascaraEnBinario) {
             continue;
         }
 
-        if (ipABinario[i] & mascaraEnBinario[i]) {
+        if (ipABinario[i] & mascaraBinario[i]) {
             direccionRed += "1";
         } else {
             direccionRed += "0";
@@ -233,7 +260,7 @@ function calculaClaseIP() {
     }
 }
 
-function calculaMascaraCidr(cidr){
+function calculaMascaraCidrBinario(cidr){
     contadorBits = 0;
     dirBlank = direccionABinario("0.0.0.0");
     mascara = "";
@@ -264,6 +291,7 @@ function calculaMascara(claseIP) {
             return "No aplica";
     }
 }
+
 function calculaTipoRed(claseIP) {
     switch (claseIP) {
         case "A":
