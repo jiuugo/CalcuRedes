@@ -5,55 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link  rel="stylesheet" href="css/style.css"><link rel="style">
     <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="img/favicon2.png">
+    <link rel="icon" type="image/png" href="img/prueba2.png">
     <title>CalcuRedes</title>
 </head>
 <body>
     <h1 class="tituloIndex">CalcuRedes</h1>
     <table id="tablaIp">
-    <input type="text" pattern="^(\d{1,3}\.){3}\d{1,3}$" class="octeto" id="ip" placeholder="Ingrese la IP">
+    <tr>
+        <th>
+            <input type="text" class="octeto" id="ip" placeholder="Ingrese la IP">
+        </th>
+        <th>
+            <input type="text" class="bits" id="idBits" placeholder="Ingrese la máscara" title="Ingrese la máscara">
+        </th>
+    </tr>
     </table>
 
-    <button class="botonCalcular" id="btnCalcular">CALCULAR !!</button>
-
+    <!-- <button class="botonCalcular" id="btnIpLocal">USAR IP LOCAL</button> -->
+    <button class="botonCalcular" id="btnCalcular">¡CALCULAR!</button>
 
     <table class="tablaInfo" id="tblInfo">
-        <tr>
-            <th></th>
-            <th>Decimal</th>
-            <th>Binario</th>
-        </tr>
         <tr>
             <th>IP</th>
             <td id="idCompleta"></td>
             <td id="idBinario"></td>
+            <td id="idHexadecimal"></td>
         </tr>
         <tr>
             <th>Máscara de subred</th>
-            <td id="mascaraRed">
+            <td id="mascaraRed"></td>
             <td id="binarioSubred"></td>
-            </td>
         </tr>
         <tr>
             <th>Wildcard</th>
-            <td id="wildcard">
+            <td id="wildcard"></td>
             <td id="binarioWild"></td>
-            </td>
         </tr>
         <tr>
             <th>Dirección de red</th>
-            <td id="dirRed">
+            <td id="dirRed"></td>
             <td id="binarioDirRed"></td>
-            </td>
         </tr>
         <tr>
             <th>Dirección de broadcast</th>
-            <td id="dirBroadcast">
+            <td id="dirBroadcast"></td>
             <td id="binarioDirBroadcast"></td>
-            </td>
+        </tr>
+        <tr>
+            <th>Host mínimo</th>
+            <td id="hostMinimo"></td>
+            <td id="binarioHostMinimo"></td>
+        </tr>
+        <tr>
+            <th>Host máximo</th>
+            <td id="hostMaximo"></td>
+            <td id="binarioHostMaximo"></td>
         </tr>
     </table>
-    <table class="tablaInfo" id="tblInfo2">
+    <table class="tablaInfo2" id="tblInfo2">
+        <tr>
+            <th>Número de subredes</th>
+            <td id="numSubredes"></td>
+        </tr>
         <tr>
             <th>Número de host</th>
             <td id="numHost">
