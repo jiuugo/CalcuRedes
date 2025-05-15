@@ -104,14 +104,16 @@ function validarIP() {
 
 }
 
-
+let usandoPorDefecto = false;
 function muestraResultado() {
 
     let claseIP = calculaClaseIP();
 
     if(!validaCidr()){
         idBits.value = calculaCidrDefecto(claseIP);
+        usandoPorDefecto = true;
     }
+    usandoPorDefecto = false;
 
 
     let mascaraBinario = calculaMascaraCidrBinario(idBits.value);
@@ -151,7 +153,7 @@ function muestraResultado() {
 function validaCidr(){
     let regex = /^(3[0-2]|[1-2]?[0-9])$/;
 
-    if( !regex.test(idBits.value)){
+    if( !regex.test(idBits.value)||usandoPorDefecto){
         return false;
     }
 
