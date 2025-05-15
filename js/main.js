@@ -1,5 +1,5 @@
 const btnCalcular = document.getElementById("btnCalcular");
-const btnIpDefecto = document.getElementById("btnIpDefecto");
+const btnIpLocal = document.getElementById("btnIpLocal");
 
 const ip = document.getElementById("ip");
 const idBits = document.getElementById("idBits");
@@ -45,7 +45,7 @@ document.addEventListener("keydown", function(event) {
   }
 });
 
-btnIpDefecto.addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const ipInput = document.querySelector(".octeto");
  
     // Llamada a la API de ipify para obtener la IP pública
@@ -57,6 +57,9 @@ btnIpDefecto.addEventListener("click", () => {
         .catch(error => {
             console.error("Error al obtener la IP pública:", error);
         });
+});
+
+btnIpLocal.addEventListener("click", () => {
 });
 
 function colorearBinario(ipBinario, cidr, claseIP) {
