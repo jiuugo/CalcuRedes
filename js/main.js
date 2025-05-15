@@ -20,6 +20,12 @@ const binarioDirBroadcast = document.getElementById("binarioDirBroadcast");
 
 const numHost = document.getElementById("numHost");
 const numSubredes = document.getElementById("numSubredes");
+const hostMinimo = document.getElementById("hostMinimo");
+const hostMaximo = document.getElementById("hostMaximo");
+const binarioHostMinimo = document.getElementById("binarioHostMinimo");
+const binarioHostMaximo = document.getElementById("binarioHostMaximo");
+
+const idHexadecimal = document.getElementById("idHexadecimal");
 
 
 const tblInfo = document.getElementById("tblInfo");
@@ -83,6 +89,30 @@ function colorearBinario(ipBinario, cidr, claseIP) {
     }
  
     return html;
+}
+
+function colorearIPDecimal(ipDecimal, cidr) {
+    const octetos = obtieneOctetos(ipDecimal);
+    const bitsPorOcteto = 8;
+ 
+    let octetosHTML = [];
+ 
+    for (let i = 0; i < octetos.length; i++) {
+        const bitsInicio = i * bitsPorOcteto;
+        const bitsFin = bitsInicio + bitsPorOcteto;
+ 
+        let color = "blue"; // Por defecto: host
+ 
+        if (bitsFin <= cidr) {
+            color = "red"; // Todo el octeto es de red
+        } else if (bitsInicio < cidr) {
+            color = "purple"; // Mezcla (no es común en decimal, pero lo indicamos)
+        }
+ 
+        octetosHTML.push(`<span style="color:${color}">${octetos[i]}</span>`);
+    }
+ 
+    return octetosHTML.join('<span style="color:gray;">.</span>');
 }
 
 function accionCalcular() {
@@ -169,7 +199,7 @@ function muestraResultado() {
     let broadcastDecimal = direccionADecimal(broadcastBinario);
 
 
-    idCompleta.innerHTML = ipCompleta;
+    idCompleta.innerHTML = colorearIPDecimal(ipCompleta, parseInt(idBits.value));;
     claseRed.innerHTML = claseIP;
     mascaraRed.innerHTML = mascara;
     tipoRed.innerHTML = tipo;
@@ -183,9 +213,43 @@ function muestraResultado() {
     binarioDirRed.innerHTML = direccionRedBinario;
     binarioDirBroadcast.innerHTML = broadcastBinario;
 
+    idHexadecimal.innerHTML = direccionAHexadecimal(ipABinario);
+
     numHost.innerHTML = Math.pow(2, 32 - idBits.value)-2;
     //arreglar el número de subredes
-    numSubredes.innerHTML = Math.pow(2, idBits.value -calculaCidrDefecto(claseIP));
+
+    if(idBits.value - calculaCidrDefecto(claseIP) < 0){
+        numSubredes.innerHTML = 1;
+    }else{numSubredes.innerHTML = Math.pow(2, idBits.value - calculaCidrDefecto(claseIP));}
+
+    hostMinimo.innerHTML = sumarADireccion(direccionDecimal, 1);
+    hostMaximo.innerHTML = sumarADireccion(broadcastDecimal, -1);
+    binarioHostMaximo.innerHTML = direccionABinario(sumarADireccion(broadcastDecimal, -1));
+    binarioHostMinimo.innerHTML = direccionABinario(sumarADireccion(direccionDecimal, 1));
+    
+}
+
+function sumarADireccion(direccion, num){
+    let octetos = obtieneOctetos(direccion);
+    let resultado = [];
+
+    for (let i = octetos.length - 1; i >= 0; i--) {
+        let suma = parseInt(octetos[i]) + num;
+
+        if (suma < 0) {
+            suma += 256;
+            num = -1;
+        } else if (suma > 255) {
+            suma -= 256;
+            num = 1;
+        } else {
+            num = 0;
+        }
+
+        resultado.unshift(suma);
+    }
+
+    return resultado.join('.');
 }
 
 function validaCidr(){
@@ -275,6 +339,19 @@ function direccionADecimal(direccion) {
         octetosDecimal.push(decimal);
     }
     return convierteArrayADireccion(octetosDecimal);
+}
+
+function direccionAHexadecimal(direccionBinaria) {
+    const octetosBinarios = obtieneOctetos(direccionBinaria);
+    const octetosHexadecimales = [];
+ 
+    for (let octeto of octetosBinarios) {
+        const decimal = parseInt(octeto, 2);
+        const hex = decimal.toString(16).toUpperCase().padStart(2, "0");
+        octetosHexadecimales.push(hex);
+    }
+ 
+    return convierteArrayADireccion(octetosHexadecimales);
 }
 
 function calculaWildcard() {
