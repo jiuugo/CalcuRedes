@@ -1,4 +1,5 @@
 const btnCalcular = document.getElementById("btnCalcular");
+const btnIpDefecto = document.getElementById("btnIpDefecto");
 
 const ip = document.getElementById("ip");
 const idBits = document.getElementById("idBits");
@@ -33,6 +34,20 @@ document.addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
     btnCalcular.click();
   }
+});
+
+btnIpDefecto.addEventListener("click", () => {
+    const ipInput = document.querySelector(".octeto");
+ 
+    // Llamada a la API de ipify para obtener la IP pública
+    fetch("https://api.ipify.org?format=json")
+        .then(response => response.json())
+        .then(data => {
+            ipInput.value = data.ip; // Coloca la IP pública en el input
+        })
+        .catch(error => {
+            console.error("Error al obtener la IP pública:", error);
+        });
 });
 
 function accionCalcular() {
