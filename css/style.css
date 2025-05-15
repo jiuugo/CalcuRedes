@@ -25,6 +25,18 @@ body{
     border: 2px solid rgb(84, 207, 176,0.5);
     color: white;
 }
+
+.bits{
+    margin-right: 2px;
+    margin-left: 2px;
+    height: 35px;
+    width: 100px;
+    font-size: 15px;
+    background-color: rgb(37, 37, 37);
+    border: 2px solid rgb(84, 207, 176,0.5);
+    color: white;
+    float: right;
+}
 #tablaIp{
     margin: 40px auto;
 }
