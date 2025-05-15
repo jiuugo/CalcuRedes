@@ -1,6 +1,7 @@
 const btnCalcular = document.getElementById("btnCalcular");
 
 const ip = document.getElementById("ip");
+const idBits = document.getElementById("idBits");
 
 const idCompleta = document.getElementById("idCompleta");
 const claseRed = document.getElementById("claseRed");
@@ -230,6 +231,25 @@ function calculaClaseIP() {
     if (octetosIp[0] < 256) {
         return "E";
     }
+}
+
+function calculaMascaraCidr(cidr){
+    contadorBits = 0;
+    dirBlank = direccionABinario("0.0.0.0");
+    mascara = "";
+
+    for(let i=0; i<dirBlank.length;i++){
+        if(dirBlank[i]==="."){
+            mascara += ".";
+            continue;
+        }
+        if(contadorBits<cidr){
+            mascara += "1";
+            contadorBits++;
+        }else mascara += "0";
+    }
+
+    return mascara;
 }
 
 function calculaMascara(claseIP) {
