@@ -44,6 +44,7 @@ Añadir input para introducir la máscara personalizada, rellenar el input con e
 Crear nuevo botón de "USAR IP POR DEFECTO".
 **DIFICULTADES**
 Diferenciar mediante los colores la parte de red, subred y host en la dirección IP.
+Hemos tenido dificultades con el apartado de IP local.
 **SOLUCIONES**
 Puesta en común, investigando en internet.
 **FUENTES CONSULTADAS**
