@@ -36,3 +36,21 @@ https://www.ionos.es/digitalguide/servidores/know-how/broadcast-ip/
 Separar en dos tablas independientes la información numérica y los datos en forma de texto.
 **IDEAS DE MEJORA**
 Estética y acabar el próxima día lo de esta sesión.
+
+## SESION 3 (15/05/2025)
+
+**RESUMEN**
+Añadir input para introducir la máscara personalizada, rellenar el input con el valor por defecto de la máscara de red para su clase al introducir la IP y se muestra el resumen con la información correspondiente de la sesión anterior y la sesión nueva.
+Crear nuevo botón de "USAR IP POR DEFECTO".
+**DIFICULTADES**
+Diferenciar mediante los colores la parte de red, subred y host en la dirección IP.
+**SOLUCIONES**
+Puesta en común, investigando en internet.
+**FUENTES CONSULTADAS**
+https://www.ipify.org/
+https://www.aprendexojo.com/2017/09/ipify-para-xojo/
+
+**DECISIONES TÉCNICAS**
+La selección de colores en la parte que ha tenido mayor dificultad para nuestro grupo y separación de información en dos tablas independientes.
+**IDEAS DE MEJORA**
+Cambiar el favicon y ponerlo del mismo color que el título de la página.
