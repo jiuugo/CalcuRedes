@@ -65,22 +65,46 @@ body{
     text-align: center;
     margin: 80px auto;
     width: 900px;
-    border: 3px solid rgb(84, 207, 176,0.3);
     border-radius: 25px;
     display: none;
     box-shadow: 0px 0px 50px 30px rgb(84, 207, 176,0.2);
     padding: 2em 0;
     text-align: left;
+    border-collapse: collapse;
 }
+
+.tablaInfo2 {
+    text-align: center;
+    margin: 80px auto;
+    width: 700px;
+    height: 400px;
+    border: none;
+    border-radius: 25px;
+    display: none;
+    box-shadow: 0px 0px 50px 30px rgb(84, 207, 176, 0.2);
+    padding: 2em 0;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+.tablaInfo tr:last-child, .tablaInfo2 tr:last-child {
+    border-bottom: none;
+}
+
 
 .tablaInfo td, .tablaInfo th{
     padding: 15px;
-    width: 40%;
+    width: 80%;
 }
 
 .tablaInfo td{
     width: 40%;
 }
-.tablaInfo th{
+
+.tablaInfo tr, .tablaInfo2 tr{
+    border-bottom: 1px solid rgba(0, 255, 191, 0.27);
+}
+.tablaInfo th, .tablaInfo2 th{
     color: rgb(84, 207, 176,0.7);
+    padding: 15px;
 }
