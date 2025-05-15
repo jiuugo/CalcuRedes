@@ -127,9 +127,6 @@ function accionCalcular() {
 
     muestraResultado();
 
-    tblInfo.style.display = "table";
-    tblInfo2.style.display = "table";
-
 }
 
 //aqui irá la función que valida el input y le da el color correspondiente
@@ -175,6 +172,11 @@ function muestraResultado() {
     let claseIP = calculaClaseIP();
 
     if(!validaCidr()){
+        if(calculaCidrDefecto(claseIP) == "No aplica"){
+            alert("No hay una máscara de subred por defecto para la clase " + claseIP + ". Por favor, introduce un CIDR válido.");
+            return;
+        }
+
         idBits.value = calculaCidrDefecto(claseIP);
         usandoPorDefecto = true;
     }
@@ -184,6 +186,7 @@ function muestraResultado() {
     let mascaraBinario = calculaMascaraCidrBinario(idBits.value);
     mascara = direccionADecimal(mascaraBinario);
     
+
     let tipo = calculaTipoRed(claseIP);
     let wildcardValor = calculaWildcard();
 
@@ -227,6 +230,9 @@ function muestraResultado() {
     binarioHostMaximo.innerHTML = direccionABinario(sumarADireccion(broadcastDecimal, -1));
     binarioHostMinimo.innerHTML = direccionABinario(sumarADireccion(direccionDecimal, 1));
     
+    
+    tblInfo.style.display = "table";
+    tblInfo2.style.display = "table";
 }
 
 function sumarADireccion(direccion, num){
@@ -411,18 +417,6 @@ function calculaMascaraCidrBinario(cidr){
     return mascara;
 }
 
-function calculaMascara(claseIP) {
-    switch (claseIP) {
-        case "A":
-            return "255.0.0.0";
-        case "B":
-            return "255.255.0.0";
-        case "C":
-            return "255.255.255.0";
-        default:
-            return "No aplica";
-    }
-}
 
 function calculaTipoRed(claseIP) {
     switch (claseIP) {
