@@ -59,9 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
-btnIpLocal.addEventListener("click", () => {
-});
-
 function colorearBinario(ipBinario, cidr, claseIP) {
     const bitsRedClase = calculaCidrDefecto(claseIP); // p. ej., A → 8, B → 16, etc.
     const bitsSubred = cidr - bitsRedClase;
