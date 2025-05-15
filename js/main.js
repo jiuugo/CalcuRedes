@@ -18,6 +18,9 @@ const binarioWild = document.getElementById("binarioWild");
 const binarioDirRed = document.getElementById("binarioDirRed");
 const binarioDirBroadcast = document.getElementById("binarioDirBroadcast");
 
+const numHost = document.getElementById("numHost");
+const numSubredes = document.getElementById("numSubredes");
+
 
 const tblInfo = document.getElementById("tblInfo");
 const tblInfo2 = document.getElementById("tblInfo2");
@@ -49,6 +52,38 @@ btnIpDefecto.addEventListener("click", () => {
             console.error("Error al obtener la IP pública:", error);
         });
 });
+
+function colorearBinario(ipBinario, cidr, claseIP) {
+    const bitsRedClase = calculaCidrDefecto(claseIP); // p. ej., A → 8, B → 16, etc.
+    const bitsSubred = cidr - bitsRedClase;
+ 
+    let html = "";
+    let bitIndex = 0;
+ 
+    for (let i = 0; i < ipBinario.length; i++) {
+        const char = ipBinario[i];
+ 
+        if (char === ".") {
+            html += "<span style='color:gray;'>.</span>";
+            continue;
+        }
+ 
+        let color = "black";
+ 
+        if (bitIndex < bitsRedClase) {
+            color = "red"; // Parte de red
+        } else if (bitIndex < cidr) {
+            color = "orange"; // Parte de subred
+        } else {
+            color = "blue"; // Parte de host
+        }
+ 
+        html += `<span style="color:${color}">${char}</span>`;
+        bitIndex++;
+    }
+ 
+    return html;
+}
 
 function accionCalcular() {
     ipCompleta = ip.value;
@@ -142,12 +177,15 @@ function muestraResultado() {
     dirRed.innerHTML = direccionDecimal;
     dirBroadcast.innerHTML = broadcastDecimal;
 
-    idBinario.innerHTML = ipABinario;
+    idBinario.innerHTML = colorearBinario(ipABinario, parseInt(idBits.value), claseIP);
     binarioSubred.innerHTML = mascaraBinario;
     binarioWild.innerHTML = wildcardABinario;
     binarioDirRed.innerHTML = direccionRedBinario;
     binarioDirBroadcast.innerHTML = broadcastBinario;
 
+    numHost.innerHTML = Math.pow(2, 32 - idBits.value)-2;
+    //arreglar el número de subredes
+    numSubredes.innerHTML = Math.pow(2, idBits.value -calculaCidrDefecto(claseIP));
 }
 
 function validaCidr(){
