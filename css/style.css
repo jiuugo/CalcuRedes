@@ -70,12 +70,14 @@ body{
     display: none;
     box-shadow: 0px 0px 50px 30px rgb(84, 207, 176,0.2);
     padding: 2em 0;
+    text-align: left;
 }
- 
+
 .tablaInfo td, .tablaInfo th{
     padding: 15px;
     width: 40%;
 }
+
 .tablaInfo td{
     width: 40%;
 }
