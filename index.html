@@ -15,11 +15,12 @@
         <th>
             <input type="text" class="octeto" id="ip" placeholder="Ingrese la IP">
         </th>
-        <th>
-            <input type="text" class="bits" id="idMSub" placeholder="Máscara de subred" title="Ingrese la máscara personalizada para dividir la red en subredes en formato mácara variable">
-        </th>
+        <th style="width: 10px; text-align: center; font-size: 1.5em;">/</th>
         <th>
             <input type="text" class="bits" id="idBits" placeholder="Máscara" title="Ingrese la máscara">
+        </th>
+        <th>
+            <input type="text" class="bits" id="idMSub" placeholder="Máscara de subred" title="Ingrese la máscara personalizada para dividir la red en subredes en formato mácara variable">
         </th>
     </tr>
     </table>
@@ -72,21 +73,20 @@
         </tr>
         <tr>
             <th>Número de host</th>
-            <td id="numHost">
-            </td>
+            <td id="numHost"></td>
         </tr>
         <tr>
             <th>Clase de Red</th>
-            <td id="claseRed">
-            </td>
+            <td id="claseRed"></td>
         </tr>
 
         <tr>
             <th>Tipo de Red</th>
-            <td id="tipoRed">
-            </td>
+            <td id="tipoRed"></td>
         </tr>
     </table>
+
+    <div id="subnets"></div>
     <script defer src="js/main.js"></script>
 </body>
 </html>
