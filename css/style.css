@@ -77,14 +77,14 @@ body{
 .tablaInfo2 {
     text-align: center;
     margin: 80px auto;
-    width: 700px;
+    width: 900px; /*cambiado por obed */
     height: 400px;
     border: none;
     border-radius: 25px;
     display: none;
     box-shadow: 0px 0px 50px 30px rgb(84, 207, 176, 0.2);
     padding: 2em 0;
-    text-align: left;
+    text-align: center; /*cambiado por obed */
     border-collapse: collapse;
 }
 
@@ -112,3 +112,4 @@ body{
     border-collapse: collapse;
     text-align: left;
 }
+
