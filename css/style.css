@@ -108,4 +108,7 @@ body{
 .tablaInfo th, .tablaInfo2 th{
     color: rgb(84, 207, 176,0.7);
     padding: 15px;
+    margin: 10px auto;
+    border-collapse: collapse;
+    text-align: left;
 }
