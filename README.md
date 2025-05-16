@@ -55,3 +55,20 @@ https://www.aprendexojo.com/2017/09/ipify-para-xojo/
 La selección de colores en la parte que ha tenido mayor dificultad para nuestro grupo y separación de información en dos tablas independientes.
 **IDEAS DE MEJORA**
 Cambiar el favicon y ponerlo del mismo color que el título de la página.
+
+## SESION 4 (16/05/2025)
+
+**RESUMEN**
+Añadir un input para introducir una máscara personalizada para dividir las red en subredes en formato máscara variable.
+**DIFICULTADES**
+Se nos complicó comprobar el valor introducido en el input, si es válido de acuerdo al resto de valores.
+Mostrar el resumen con la información de los valores de la sesión anterior.
+**SOLUCIONES**
+Puesta en común, investigando en internet.
+**FUENTES CONSULTADAS**
+https://www.webempresa.com/blog/que-son-las-tablas-css-y-como-crearlas.html
+
+**DECISIONES TÉCNICAS**
+Hacer tablas dinámicas conformes a nuestro gusto de CSS, que sea legible y esté bien organizado.
+**IDEAS DE MEJORA**
+Cambiar el favicon y ponerlo del mismo color que el título de la página.
