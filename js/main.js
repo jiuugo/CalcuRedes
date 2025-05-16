@@ -3,6 +3,7 @@ const btnIpLocal = document.getElementById("btnIpLocal");
 
 const ip = document.getElementById("ip");
 const idBits = document.getElementById("idBits");
+const idMSub = document.getElementById("idMSub");
 
 const idCompleta = document.getElementById("idCompleta");
 const claseRed = document.getElementById("claseRed");
@@ -39,15 +40,15 @@ btnCalcular.addEventListener("click", () => {
     accionCalcular();
 });
 
-document.addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
-    btnCalcular.click();
-  }
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        btnCalcular.click();
+    }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
     const ipInput = document.querySelector(".octeto");
- 
+
     // Llamada a la API de ipify para obtener la IP pública
     fetch("https://api.ipify.org?format=json")
         .then(response => response.json())
@@ -62,20 +63,20 @@ document.addEventListener("DOMContentLoaded", () => {
 function colorearBinario(ipBinario, cidr, claseIP) {
     const bitsRedClase = calculaCidrDefecto(claseIP); // p. ej., A → 8, B → 16, etc.
     const bitsSubred = cidr - bitsRedClase;
- 
+
     let html = "";
     let bitIndex = 0;
- 
+
     for (let i = 0; i < ipBinario.length; i++) {
         const char = ipBinario[i];
- 
+
         if (char === ".") {
             html += "<span style='color:gray;'>.</span>";
             continue;
         }
- 
+
         let color = "black";
- 
+
         if (bitIndex < bitsRedClase) {
             color = "red"; // Parte de red
         } else if (bitIndex < cidr) {
@@ -83,35 +84,35 @@ function colorearBinario(ipBinario, cidr, claseIP) {
         } else {
             color = "blue"; // Parte de host
         }
- 
+
         html += `<span style="color:${color}">${char}</span>`;
         bitIndex++;
     }
- 
+
     return html;
 }
 
 function colorearIPDecimal(ipDecimal, cidr) {
     const octetos = obtieneOctetos(ipDecimal);
     const bitsPorOcteto = 8;
- 
+
     let octetosHTML = [];
- 
+
     for (let i = 0; i < octetos.length; i++) {
         const bitsInicio = i * bitsPorOcteto;
         const bitsFin = bitsInicio + bitsPorOcteto;
- 
+
         let color = "blue"; // Por defecto: host
- 
+
         if (bitsFin <= cidr) {
             color = "red"; // Todo el octeto es de red
         } else if (bitsInicio < cidr) {
             color = "purple"; // Mezcla (no es común en decimal, pero lo indicamos)
         }
- 
+
         octetosHTML.push(`<span style="color:${color}">${octetos[i]}</span>`);
     }
- 
+
     return octetosHTML.join('<span style="color:gray;">.</span>');
 }
 
@@ -171,8 +172,9 @@ function muestraResultado() {
 
     let claseIP = calculaClaseIP();
 
-    if(!validaCidr()){
-        if(calculaCidrDefecto(claseIP) == "No aplica"){
+    if (!validaCidr()) {
+
+        if (calculaCidrDefecto(claseIP) == "No aplica") {
             alert("No hay una máscara de subred por defecto para la clase " + claseIP + ". Por favor, introduce un CIDR válido.");
             return;
         }
@@ -183,9 +185,13 @@ function muestraResultado() {
     usandoPorDefecto = false;
 
 
+
+    let bitsExtra = idMSub.value - idBits.value;
+
+
     let mascaraBinario = calculaMascaraCidrBinario(idBits.value);
     mascara = direccionADecimal(mascaraBinario);
-    
+
 
     let tipo = calculaTipoRed(claseIP);
     let wildcardValor = calculaWildcard();
@@ -200,6 +206,9 @@ function muestraResultado() {
 
     let broadcastBinario = calculaBroadcast(direccionRedBinario, mascaraBinario);
     let broadcastDecimal = direccionADecimal(broadcastBinario);
+
+
+    let subredes = calculaSubredes(direccionRedBinario, bitsExtra, idBits.value);
 
 
     idCompleta.innerHTML = colorearIPDecimal(ipCompleta, parseInt(idBits.value));;
@@ -218,24 +227,98 @@ function muestraResultado() {
 
     idHexadecimal.innerHTML = direccionAHexadecimal(ipABinario);
 
-    numHost.innerHTML = Math.pow(2, 32 - idBits.value)-2;
+    numHost.innerHTML = Math.pow(2, 32 - idBits.value) - 2;
     //arreglar el número de subredes
 
-    if(idBits.value - calculaCidrDefecto(claseIP) < 0){
+    if (idBits.value - calculaCidrDefecto(claseIP) < 0) {
         numSubredes.innerHTML = 1;
-    }else{numSubredes.innerHTML = Math.pow(2, idBits.value - calculaCidrDefecto(claseIP));}
+    } else { numSubredes.innerHTML = Math.pow(2, idBits.value - calculaCidrDefecto(claseIP)); }
 
     hostMinimo.innerHTML = sumarADireccion(direccionDecimal, 1);
     hostMaximo.innerHTML = sumarADireccion(broadcastDecimal, -1);
     binarioHostMaximo.innerHTML = direccionABinario(sumarADireccion(broadcastDecimal, -1));
     binarioHostMinimo.innerHTML = direccionABinario(sumarADireccion(direccionDecimal, 1));
-    
-    
+
+
+    muestraSubredes(subredes);
     tblInfo.style.display = "table";
     tblInfo2.style.display = "table";
 }
 
-function sumarADireccion(direccion, num){
+function muestraSubredes(subredes) {
+    const subnets = document.getElementById("subnets");
+
+    for (let i = 0; i < subredes.length; i++) {
+        const tabla = document.createElement("table");
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        const tdDir = document.createElement("td");
+
+        td.innerHTML = "Dirección subred " + (i+1);
+        tdDir.innerHTML = subredes[i];
+        tr.appendChild(td);
+        tr.appendChild(tdDir);
+        tabla.appendChild(tr);
+
+        td.innerHTML = "Wildcard ";
+        tdDir.innerHTML = calculaWildcard(subredes[i]);
+        tr.innerHTML = "";
+        tr.appendChild(td);
+        tr.appendChild(tdDir);
+        tabla.appendChild(tr);
+
+        
+        subnets.appendChild(tabla);
+    }
+
+
+
+}
+
+//para direcciones binarias
+function quitaPuntosDireccion(direccion) {
+    let octetos = obtieneOctetos(direccion);
+    let cadena = "";
+    for (octeto of octetos) {
+        cadena += octeto;
+    }
+    return cadena;
+}
+
+function ponPuntosBinario(cadena) {
+    return cadena.substring(0, 8) + "." + cadena.substring(8, 16) + "." + cadena.substring(16, 24) + "." + cadena.substring(24, 32);
+}
+
+
+function calculaSubredes(direccionRedBinario, bitsExtra, cidr) {
+    let contadorBinario = "";
+    let subredes = [];
+    console.log("hola");
+    direccionRedBinario = quitaPuntosDireccion(direccionRedBinario);
+
+    for (let i = 0; i < Math.pow(2, bitsExtra); i++) {
+        contadorBinario = i.toString(2);
+        let contadorBinarioL = "";
+
+        for (let i = 0; i < bitsExtra - contadorBinario.length; i++) {
+            contadorBinarioL += "0";
+        }
+        contadorBinarioL += contadorBinario;
+        contadorBinario = contadorBinarioL;
+        console.log(contadorBinario);
+
+
+        subredes.push(ponPuntosBinario((direccionRedBinario.substring(0, cidr - bitsExtra - 1)) + contadorBinario + direccionRedBinario.substring(cidr - 1, direccionRedBinario.length - 1)));
+
+
+
+    }
+
+    return subredes;
+
+}
+
+function sumarADireccion(direccion, num) {
     let octetos = obtieneOctetos(direccion);
     let resultado = [];
 
@@ -258,18 +341,18 @@ function sumarADireccion(direccion, num){
     return resultado.join('.');
 }
 
-function validaCidr(){
+function validaCidr() {
     let regex = /^(3[0-2]|[1-2]?[0-9])$/;
 
-    if( !regex.test(idBits.value)||usandoPorDefecto){
+    if (!regex.test(idBits.value) || usandoPorDefecto) {
         return false;
     }
 
     return true;
 }
 
-function calculaCidrDefecto(claseIP){
-        switch (claseIP) {
+function calculaCidrDefecto(claseIP) {
+    switch (claseIP) {
         case "A":
             return 8;
         case "B":
@@ -287,7 +370,7 @@ function calculaBroadcast(direccionRedBinario, mascaraBinario) {
     for (let i = 0; i < mascaraBinario.length; i++) {
         if (mascaraBinario[i] === "0") {
             dirBroadcast += "1";
-        }else dirBroadcast += direccionRedBinario[i];
+        } else dirBroadcast += direccionRedBinario[i];
 
     }
 
@@ -350,13 +433,13 @@ function direccionADecimal(direccion) {
 function direccionAHexadecimal(direccionBinaria) {
     const octetosBinarios = obtieneOctetos(direccionBinaria);
     const octetosHexadecimales = [];
- 
+
     for (let octeto of octetosBinarios) {
         const decimal = parseInt(octeto, 2);
         const hex = decimal.toString(16).toUpperCase().padStart(2, "0");
         octetosHexadecimales.push(hex);
     }
- 
+
     return convierteArrayADireccion(octetosHexadecimales);
 }
 
@@ -398,20 +481,20 @@ function calculaClaseIP() {
     }
 }
 
-function calculaMascaraCidrBinario(cidr){
+function calculaMascaraCidrBinario(cidr) {
     contadorBits = 0;
     dirBlank = direccionABinario("0.0.0.0");
     mascara = "";
 
-    for(let i=0; i<dirBlank.length;i++){
-        if(dirBlank[i]==="."){
+    for (let i = 0; i < dirBlank.length; i++) {
+        if (dirBlank[i] === ".") {
             mascara += ".";
             continue;
         }
-        if(contadorBits<cidr){
+        if (contadorBits < cidr) {
             mascara += "1";
             contadorBits++;
-        }else mascara += "0";
+        } else mascara += "0";
     }
 
     return mascara;
