@@ -61,9 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
-function colorearBinario(ipBinario, cidr, claseIP) {
-    const bitsRedClase = calculaCidrDefecto(claseIP); // p. ej., A → 8, B → 16, etc.
-    const bitsSubred = cidr - bitsRedClase;
+function colorearBinario(ipBinario, cidr, bitsMask) {
+    if (bitsMask == "") {
+        bitsMask = cidr;
+    }
 
     let html = "";
     let bitIndex = 0;
@@ -78,9 +79,9 @@ function colorearBinario(ipBinario, cidr, claseIP) {
 
         let color = "black";
 
-        if (bitIndex < bitsRedClase) {
+        if (bitIndex < cidr) {
             color = "red"; // Parte de red
-        } else if (bitIndex < cidr) {
+        } else if (bitIndex < bitsMask) {
             color = "orange"; // Parte de subred
         } else {
             color = "blue"; // Parte de host
@@ -188,7 +189,6 @@ function muestraResultado() {
 
     if (!validaCidrSubred(idMSub.value)) {
         idMSub.value = "";
-        return;
     } else if (parseInt(idBits.value) >= parseInt(idMSub.value)) {
         idMSub.value = "";
         alert("El valor la mascara de subred debe ser superior a la mascara de la red.");
@@ -228,7 +228,7 @@ function muestraResultado() {
     dirRed.innerHTML = direccionDecimal;
     dirBroadcast.innerHTML = broadcastDecimal;
 
-    idBinario.innerHTML = colorearBinario(ipABinario, parseInt(idBits.value), claseIP);
+    idBinario.innerHTML = colorearBinario(ipABinario, parseInt(idBits.value), idMSub.value);
     binarioSubred.innerHTML = mascaraBinario;
     binarioWild.innerHTML = wildcardABinario;
     binarioDirRed.innerHTML = direccionRedBinario;
@@ -239,9 +239,11 @@ function muestraResultado() {
     numHost.innerHTML = Math.pow(2, 32 - idBits.value) - 2;
     //arreglar el número de subredes
 
-    if (idBits.value - calculaCidrDefecto(claseIP) < 0) {
-        numSubredes.innerHTML = 1;
-    } else { numSubredes.innerHTML = Math.pow(2, idBits.value - calculaCidrDefecto(claseIP)); }
+
+
+
+
+    numSubredes.innerHTML = calculaNSubredes(idMSub.value,idBits.value);
 
     hostMinimo.innerHTML = sumarADireccion(direccionDecimal, 1);
     hostMaximo.innerHTML = sumarADireccion(broadcastDecimal, -1);
@@ -252,6 +254,14 @@ function muestraResultado() {
     muestraSubredes(subredes, idMSub.value);
     tblInfo.style.display = "table";
     tblInfo2.style.display = "table";
+}
+
+function calculaNSubredes(bitsSubmask,cidr) {
+
+    if (bitsSubmask - cidr < 0) {
+        return 1;
+    }
+    return Math.pow(2, bitsSubmask - cidr);
 }
 
 function muestraSubredes(subredes, subnetsBits) {
