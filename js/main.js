@@ -186,6 +186,14 @@ function muestraResultado() {
     usandoPorDefecto = false;
 
 
+    if (!validaCidrSubred(idMSub.value)) {
+        idMSub.value = "";
+        return;
+    } else if (parseInt(idBits.value) >= parseInt(idMSub.value)) {
+        idMSub.value = "";
+        alert("El valor la mascara de subred debe ser superior a la mascara de la red.");
+    }
+
 
     let bitsExtra = idMSub.value - idBits.value;
 
@@ -423,6 +431,16 @@ function validaCidr() {
     let regex = /^(3[0-2]|[1-2]?[0-9])$/;
 
     if (!regex.test(idBits.value) || usandoPorDefecto) {
+        return false;
+    }
+
+    return true;
+}
+
+function validaCidrSubred(cidrSubred) {
+    let regex = /^(3[0-2]|[1-2]?[0-9])$/;
+
+    if (!regex.test(cidrSubred)) {
         return false;
     }
 
