@@ -202,7 +202,7 @@ function muestraResultado() {
     mascara = direccionADecimal(mascaraBinario);
 
 
-    let tipo = calculaTipoRed(claseIP);
+    let tipo = calculaTipoRed(ipCompleta);
     let wildcardValor = calculaWildcard(mascara);
 
 
@@ -606,18 +606,29 @@ function calculaMascaraCidrBinario(cidr) {
 }
 
 
-function calculaTipoRed(claseIP) {
-    switch (claseIP) {
-        case "A":
-            return "Red pública";
-        case "B":
-            return "Red privada";
-        case "C":
-            return "Red pública";
-        default:
-            return "No aplica";
+function calculaTipoRed(direccion) {
+    let octetos = obtieneOctetos(direccion);
+    let [o1, o2] = octetos;
+
+    o1 = parseInt(o1);
+    o2 = parseInt(o2);
+        
+
+    if (o1 === 10) {
+        return "Red privada";
     }
+
+    if (o1 === 172 && o2 >= 16 && o2 <= 31) {
+        return "Red privada";
+    }
+
+    if (o1 === 192 && o2 === 168) {
+        return "Red privada";
+    }
+
+    return "Red pública";
 }
+
 
 function calculaCidr() {
     let octetosMascara = obtieneOctetos(mascara);
