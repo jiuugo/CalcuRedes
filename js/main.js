@@ -29,7 +29,7 @@ const binarioHostMaximo = document.getElementById("binarioHostMaximo");
 const idHexadecimal = document.getElementById("idHexadecimal");
 
 
-const tblInfo = document.getElementById("tblInfo");
+const tblInfo = document.getElementsByClassName("tablaInfo");
 const tblInfo2 = document.getElementById("tblInfo2");
 
 let octetosIp = [];
@@ -61,9 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
-function colorearBinario(ipBinario, cidr, claseIP) {
-    const bitsRedClase = calculaCidrDefecto(claseIP); // p. ej., A → 8, B → 16, etc.
-    const bitsSubred = cidr - bitsRedClase;
+function colorearBinario(ipBinario, cidr, bitsMask) {
+    if (bitsMask == "") {
+        bitsMask = cidr;
+    }
 
     let html = "";
     let bitIndex = 0;
@@ -78,9 +79,9 @@ function colorearBinario(ipBinario, cidr, claseIP) {
 
         let color = "black";
 
-        if (bitIndex < bitsRedClase) {
+        if (bitIndex < cidr) {
             color = "red"; // Parte de red
-        } else if (bitIndex < cidr) {
+        } else if (bitIndex < bitsMask) {
             color = "orange"; // Parte de subred
         } else {
             color = "blue"; // Parte de host
@@ -188,7 +189,6 @@ function muestraResultado() {
 
     if (!validaCidrSubred(idMSub.value)) {
         idMSub.value = "";
-        return;
     } else if (parseInt(idBits.value) >= parseInt(idMSub.value)) {
         idMSub.value = "";
         alert("El valor la mascara de subred debe ser superior a la mascara de la red.");
@@ -202,7 +202,7 @@ function muestraResultado() {
     mascara = direccionADecimal(mascaraBinario);
 
 
-    let tipo = calculaTipoRed(claseIP);
+    let tipo = calculaTipoRed(ipCompleta);
     let wildcardValor = calculaWildcard(mascara);
 
 
@@ -228,7 +228,7 @@ function muestraResultado() {
     dirRed.innerHTML = direccionDecimal;
     dirBroadcast.innerHTML = broadcastDecimal;
 
-    idBinario.innerHTML = colorearBinario(ipABinario, parseInt(idBits.value), claseIP);
+    idBinario.innerHTML = colorearBinario(ipABinario, parseInt(idBits.value), idMSub.value);
     binarioSubred.innerHTML = mascaraBinario;
     binarioWild.innerHTML = wildcardABinario;
     binarioDirRed.innerHTML = direccionRedBinario;
@@ -237,11 +237,8 @@ function muestraResultado() {
     idHexadecimal.innerHTML = direccionAHexadecimal(ipABinario);
 
     numHost.innerHTML = Math.pow(2, 32 - idBits.value) - 2;
-    //arreglar el número de subredes
 
-    if (idBits.value - calculaCidrDefecto(claseIP) < 0) {
-        numSubredes.innerHTML = 1;
-    } else { numSubredes.innerHTML = Math.pow(2, idBits.value - calculaCidrDefecto(claseIP)); }
+    numSubredes.innerHTML = calculaNSubredes(idMSub.value,idBits.value);
 
     hostMinimo.innerHTML = sumarADireccion(direccionDecimal, 1);
     hostMaximo.innerHTML = sumarADireccion(broadcastDecimal, -1);
@@ -250,8 +247,24 @@ function muestraResultado() {
 
 
     muestraSubredes(subredes, idMSub.value);
-    tblInfo.style.display = "table";
+
+    mostrarTablas();
+}
+
+function mostrarTablas(){
+
+    for(tabla of tblInfo){
+        tabla.style.display = "table";
+    }
     tblInfo2.style.display = "table";
+}
+
+function calculaNSubredes(bitsSubmask,cidr) {
+
+    if (bitsSubmask - cidr < 0) {
+        return 1;
+    }
+    return Math.pow(2, bitsSubmask - cidr);
 }
 
 function muestraSubredes(subredes, subnetsBits) {
@@ -262,6 +275,18 @@ function muestraSubredes(subredes, subnetsBits) {
     subnets.innerHTML = "";
 
     for (let i = 0; i < subredes.length; i++) {
+
+        if(i===1000){
+            const mensaje = document.createElement("p");
+            mensaje.innerHTML = "Subredes mostradas hasta el límite de 1000..."
+
+            mensaje.style.textAlign = "center";
+            mensaje.style.color = "orange";
+
+            subnets.appendChild(mensaje);
+            break;
+        }
+
         const tabla = document.createElement("table");
 
         const trDir = document.createElement("tr");
@@ -597,18 +622,29 @@ function calculaMascaraCidrBinario(cidr) {
 }
 
 
-function calculaTipoRed(claseIP) {
-    switch (claseIP) {
-        case "A":
-            return "Red pública";
-        case "B":
-            return "Red privada";
-        case "C":
-            return "Red pública";
-        default:
-            return "No aplica";
+function calculaTipoRed(direccion) {
+    let octetos = obtieneOctetos(direccion);
+    let [o1, o2] = octetos;
+
+    o1 = parseInt(o1);
+    o2 = parseInt(o2);
+        
+
+    if (o1 === 10) {
+        return "Red privada";
     }
+
+    if (o1 === 172 && o2 >= 16 && o2 <= 31) {
+        return "Red privada";
+    }
+
+    if (o1 === 192 && o2 === 168) {
+        return "Red privada";
+    }
+
+    return "Red pública";
 }
+
 
 function calculaCidr() {
     let octetosMascara = obtieneOctetos(mascara);
