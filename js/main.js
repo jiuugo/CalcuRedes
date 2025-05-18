@@ -238,10 +238,6 @@ function muestraResultado() {
 
     numHost.innerHTML = Math.pow(2, 32 - idBits.value) - 2;
 
-
-
-
-
     numSubredes.innerHTML = calculaNSubredes(idMSub.value,idBits.value);
 
     hostMinimo.innerHTML = sumarADireccion(direccionDecimal, 1);
