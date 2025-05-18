@@ -1,3 +1,7 @@
+*{
+    font-family: "Courier New", monospace;
+}
+
 body{
     background-color: #131218;
     font-size: 22px;
@@ -7,7 +11,7 @@ body{
 .tituloIndex{
     color: rgb(84, 207, 176); 
     text-align: center;
-    font-family: "Anta", sans-serif;
+    font-family: "Anta","Courier New", monospace;
     font-weight: 400;
     font-style: normal;
     font-size: 60px;
@@ -113,3 +117,14 @@ body{
     text-align: left;
 }
 
+
+.tablaInfo tr td:first-child {
+    color: rgba(84, 207, 176, 0.7);
+    font-weight: bold;
+    padding: 10px;
+}
+
+.tablaInfo tr td:last-child {
+    color: #ffffff; 
+    padding: 10px;
+}
