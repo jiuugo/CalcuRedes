@@ -117,3 +117,14 @@ body{
     text-align: left;
 }
 
+
+.tablaInfo tr td:first-child {
+    color: rgba(84, 207, 176, 0.7);
+    font-weight: bold;
+    padding: 10px;
+}
+
+.tablaInfo tr td:last-child {
+    color: #ffffff; 
+    padding: 10px;
+}
