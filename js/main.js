@@ -251,6 +251,11 @@ function muestraResultado() {
 
 
     muestraSubredes(subredes, idMSub.value);
+
+    mostrarTablas();
+}
+
+function mostrarTablas(){
     tblInfo.style.display = "table";
     tblInfo2.style.display = "table";
 }
@@ -271,6 +276,18 @@ function muestraSubredes(subredes, subnetsBits) {
     subnets.innerHTML = "";
 
     for (let i = 0; i < subredes.length; i++) {
+
+        if(i===1000){
+            const mensaje = document.createElement("p");
+            mensaje.innerHTML = "Subredes mostradas hasta el límite de 1000..."
+
+            mensaje.style.textAlign = "center";
+            mensaje.style.color = "orange";
+
+            subnets.appendChild(mensaje);
+            break;
+        }
+
         const tabla = document.createElement("table");
 
         const trDir = document.createElement("tr");
