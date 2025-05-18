@@ -237,7 +237,6 @@ function muestraResultado() {
     idHexadecimal.innerHTML = direccionAHexadecimal(ipABinario);
 
     numHost.innerHTML = Math.pow(2, 32 - idBits.value) - 2;
-    //arreglar el número de subredes
 
 
 
