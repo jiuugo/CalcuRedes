@@ -29,7 +29,7 @@ const binarioHostMaximo = document.getElementById("binarioHostMaximo");
 const idHexadecimal = document.getElementById("idHexadecimal");
 
 
-const tblInfo = document.getElementsByClassName("tablaInfo3");
+const tblInfo3 = document.getElementsByClassName("tablaInfo3");
 const tblInfo2 = document.getElementById("tblInfo2");
 
 let octetosIp = [];
@@ -253,9 +253,10 @@ function muestraResultado() {
 
 function mostrarTablas(){
 
-    for(tabla of tblInfo){
+    for(tabla of tblInfo3){
         tabla.style.display = "table";
     }
+    tblInfo.style.display = "table";
     tblInfo2.style.display = "table";
 }
 
