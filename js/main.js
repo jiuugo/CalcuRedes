@@ -238,7 +238,7 @@ function muestraResultado() {
 
     numHost.innerHTML = Math.pow(2, 32 - idBits.value) - 2;
 
-    numSubredes.innerHTML = calculaNSubredes(idMSub.value,idBits.value);
+    numSubredes.innerHTML = calculaNSubredes(idMSub.value, idBits.value);
 
     hostMinimo.innerHTML = sumarADireccion(direccionDecimal, 1);
     hostMaximo.innerHTML = sumarADireccion(broadcastDecimal, -1);
@@ -248,19 +248,22 @@ function muestraResultado() {
 
     muestraSubredes(subredes, idMSub.value);
 
-    mostrarTablas();
+    mostrarTablas(subredes);
 }
 
-function mostrarTablas(){
+function mostrarTablas(subredes) {
 
-    for(tabla of tblInfo3){
-        tabla.style.display = "table";
+    if (subredes.length != 1) {
+        for (tabla of tblInfo3) {
+            tabla.style.display = "table";
+        }
     }
+
     tblInfo.style.display = "table";
     tblInfo2.style.display = "table";
 }
 
-function calculaNSubredes(bitsSubmask,cidr) {
+function calculaNSubredes(bitsSubmask, cidr) {
 
     if (bitsSubmask - cidr < 0) {
         return 1;
@@ -276,10 +279,11 @@ function muestraSubredes(subredes, subnetsBits) {
     subnets.innerHTML = "";
 
     for (let i = 0; i < subredes.length; i++) {
+        let limite = 500;
 
-        if(i===1000){
+        if (i === limite) {
             const mensaje = document.createElement("p");
-            mensaje.innerHTML = "Subredes mostradas hasta el límite de 1000..."
+            mensaje.innerHTML = "Subredes mostradas hasta el límite de " + limite + " ..."
 
             mensaje.style.textAlign = "center";
             mensaje.style.color = "orange";
@@ -629,7 +633,7 @@ function calculaTipoRed(direccion) {
 
     o1 = parseInt(o1);
     o2 = parseInt(o2);
-        
+
 
     if (o1 === 10) {
         return "Red privada";
