@@ -109,7 +109,7 @@ function colorearIPDecimal(ipDecimal, cidr) {
         if (bitsFin <= cidr) {
             color = "red"; // Todo el octeto es de red
         } else if (bitsInicio < cidr) {
-            color = "purple"; // Mezcla (no es común en decimal, pero lo indicamos)
+            color = "yellow"; // Mezcla (no es común en decimal, pero lo indicamos)
         }
 
         octetosHTML.push(`<span style="color:${color}">${octetos[i]}</span>`);
