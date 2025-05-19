@@ -84,7 +84,7 @@ function colorearBinario(ipBinario, cidr, bitsMask) {
         } else if (bitIndex < bitsMask) {
             color = "orange"; // Parte de subred
         } else {
-            color = "blue"; // Parte de host
+            color = "#33CCFF"; // Parte de host
         }
 
         html += `<span style="color:${color}">${char}</span>`;
@@ -104,7 +104,7 @@ function colorearIPDecimal(ipDecimal, cidr) {
         const bitsInicio = i * bitsPorOcteto;
         const bitsFin = bitsInicio + bitsPorOcteto;
 
-        let color = "blue"; // Por defecto: host
+        let color = "#33CCFF"; // Por defecto: host
 
         if (bitsFin <= cidr) {
             color = "red"; // Todo el octeto es de red
