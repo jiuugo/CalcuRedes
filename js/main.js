@@ -29,7 +29,7 @@ const binarioHostMaximo = document.getElementById("binarioHostMaximo");
 const idHexadecimal = document.getElementById("idHexadecimal");
 
 
-const tblInfo = document.getElementsByClassName("tablaInfo");
+const tblInfo3 = document.getElementsByClassName("tablaInfo3");
 const tblInfo2 = document.getElementById("tblInfo2");
 
 let octetosIp = [];
@@ -84,7 +84,7 @@ function colorearBinario(ipBinario, cidr, bitsMask) {
         } else if (bitIndex < bitsMask) {
             color = "orange"; // Parte de subred
         } else {
-            color = "blue"; // Parte de host
+            color = "#33CCFF"; // Parte de host
         }
 
         html += `<span style="color:${color}">${char}</span>`;
@@ -104,7 +104,7 @@ function colorearIPDecimal(ipDecimal, cidr) {
         const bitsInicio = i * bitsPorOcteto;
         const bitsFin = bitsInicio + bitsPorOcteto;
 
-        let color = "blue"; // Por defecto: host
+        let color = "#33CCFF"; // Por defecto: host
 
         if (bitsFin <= cidr) {
             color = "red"; // Todo el octeto es de red
@@ -238,7 +238,7 @@ function muestraResultado() {
 
     numHost.innerHTML = Math.pow(2, 32 - idBits.value) - 2;
 
-    numSubredes.innerHTML = calculaNSubredes(idMSub.value,idBits.value);
+    numSubredes.innerHTML = calculaNSubredes(idMSub.value, idBits.value);
 
     hostMinimo.innerHTML = sumarADireccion(direccionDecimal, 1);
     hostMaximo.innerHTML = sumarADireccion(broadcastDecimal, -1);
@@ -248,18 +248,22 @@ function muestraResultado() {
 
     muestraSubredes(subredes, idMSub.value);
 
-    mostrarTablas();
+    mostrarTablas(subredes);
 }
 
-function mostrarTablas(){
+function mostrarTablas(subredes) {
 
-    for(tabla of tblInfo){
-        tabla.style.display = "table";
+    if (subredes.length != 1) {
+        for (tabla of tblInfo3) {
+            tabla.style.display = "table";
+        }
     }
+
+    tblInfo.style.display = "table";
     tblInfo2.style.display = "table";
 }
 
-function calculaNSubredes(bitsSubmask,cidr) {
+function calculaNSubredes(bitsSubmask, cidr) {
 
     if (bitsSubmask - cidr < 0) {
         return 1;
@@ -275,10 +279,11 @@ function muestraSubredes(subredes, subnetsBits) {
     subnets.innerHTML = "";
 
     for (let i = 0; i < subredes.length; i++) {
+        let limite = 500;
 
-        if(i===1000){
+        if (i === limite) {
             const mensaje = document.createElement("p");
-            mensaje.innerHTML = "Subredes mostradas hasta el límite de 1000..."
+            mensaje.innerHTML = "Subredes mostradas hasta el límite de " + limite + " ..."
 
             mensaje.style.textAlign = "center";
             mensaje.style.color = "orange";
@@ -379,7 +384,7 @@ function muestraSubredes(subredes, subnetsBits) {
 
 
 
-        tabla.classList.add("tablaInfo")
+        tabla.classList.add("tablaInfo3")
 
         subnets.appendChild(tabla);
     }
@@ -628,7 +633,7 @@ function calculaTipoRed(direccion) {
 
     o1 = parseInt(o1);
     o2 = parseInt(o2);
-        
+
 
     if (o1 === 10) {
         return "Red privada";
